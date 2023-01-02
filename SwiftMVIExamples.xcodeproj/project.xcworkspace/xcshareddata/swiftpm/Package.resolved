@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftmvi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/xtro/SwiftMVI.git",
+      "state" : {
+        "revision" : "7d7f0d11604314dc23039ef843f29ad9b0a5f3a0",
+        "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "swiftusecase",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/xtro/SwiftUseCase.git",
+      "state" : {
+        "revision" : "922d0c27e71dc313bb7f3839997509b21bee7b43",
+        "version" : "0.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}
