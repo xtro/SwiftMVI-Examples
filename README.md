@@ -23,7 +23,7 @@ class AssetsFeature: AsyncFeature {
     func reduce(intent: Intent) async {
         switch intent {
         case .fetch:
-            await state { state in
+            await state { _ in
                 .loading
             }
             do {
