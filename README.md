@@ -10,11 +10,11 @@ typealias AsyncFeature = Observer & Processing & ImmutableState & AsyncIntentRed
 
 class AssetsFeature: AsyncFeature {
     enum State {
-        case assets([AssetItemData])
         case loading
+        case assets([AssetItemData])
         case failed(Error)
     }
-    var state: State = .loading
+    var state = .loading
     
     enum Intent {
         case fetch
