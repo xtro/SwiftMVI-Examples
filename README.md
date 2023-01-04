@@ -1,5 +1,5 @@
 # SwiftMVI-Examples
-Example application based on SwiftMVI & SwiftUseCase
+Example application based on [SwiftMVI](https://github.com/xtro/SwiftMVI) & [SwiftUseCase](https://github.com/xtro/SwiftUseCase)
 
 ```swift
 import Foundation
