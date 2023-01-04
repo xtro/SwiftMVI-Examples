@@ -21,17 +21,20 @@ class AssetsFeature: AsyncFeature {
     }
     
     func reduce(intent: Intent) async {
-        do {
+        switch intent {
+        case .fetch:
             await state { state in
                 .loading
             }
-            let assets = try await run(Network.getAssets).data
-            await state { _ in
-                .assets(assets)
-            }
-        }catch{
-            await state { _ in
-                .failed(error)
+            do {
+                let assets = try await run(Network.getAssets).data
+                await state { _ in
+                    .assets(assets)
+                }
+            }catch{
+                await state { _ in
+                    .failed(error)
+                }
             }
         }
     }
