@@ -7,20 +7,17 @@
 
 import Foundation
 import SwiftMVI
+import SwiftUI
 
-typealias AsyncFeature = Observer & Processing & ReducibleState & AsyncIntentReducer & EventReducer
+typealias AsyncFeature = Observer & Processing & ImmutableState & AsyncIntentReducer
 
 class AssetsFeature: AsyncFeature {
-    class State {
-        var assets: [AssetItemData]?
-        var isLoading: Bool = false
+    enum State {
+        case assets([AssetItemData])
+        case loading
+        case failed(Error)
     }
-    var state = State()
-    
-    enum Event {
-        case downloadFailure(any Error)
-    }
-    var publisher = Publisher()
+    var state: State = .loading
     
     enum Intent {
         case fetch
@@ -28,16 +25,17 @@ class AssetsFeature: AsyncFeature {
     
     func reduce(intent: Intent) async {
         do {
-            await state {
-                $0.isLoading = true
+            await state { state in
+                .loading
             }
-            let result = try await run(Network.Assets())
-            await state {
-                $0.assets = result.data
-                $0.isLoading = false
+            let assets = try await run(Network.getAssets).data
+            await state { _ in
+                .assets(assets)
             }
         }catch{
-            publish( .downloadFailure(error) )
+            await state { _ in
+                .failed(error)
+            }
         }
     }
 }

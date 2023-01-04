@@ -9,7 +9,7 @@ import Foundation
 import SwiftUseCase
 
 extension Network {
-    public struct Assets: AsyncThrowingUseCase {
+    public struct GetAssets: AsyncThrowingUseCase {
         public typealias Parameter = Void
         public typealias Result = AssetsData
         

@@ -15,28 +15,27 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            if feature.state.isLoading {
+            switch feature.state {
+            case .loading:
                 ZStack(alignment: .center) {
                     Text("Loading...")
                 }
-            } else {
+            case .failed(let error):
+                ZStack(alignment: .center) {
+                    Text("\(error.localizedDescription)")
+                }
+            case .assets(let list):
                 ScrollView {
                     VStack {
-                        if let assets = feature.state.assets {
-                            if assets.isEmpty {
-                                Text("Empty")
-                            } else {
-                                ForEach(assets, id: \.id) { asset in
-                                    HStack {
-                                        Text(asset.name)
-                                            .bold()
-                                        Spacer()
-                                        Text("\(currency: asset.priceUsd)")
-                                    }
-                                    .padding(.horizontal)
-                                    Rectangle().foregroundColor(.gray).frame(height: 1)
-                                }
+                        ForEach(list, id: \.id) { asset in
+                            HStack {
+                                Text(asset.name)
+                                    .bold()
+                                Spacer()
+                                Text("\(currency: asset.priceUsd)")
                             }
+                            .padding(.horizontal)
+                            Rectangle().foregroundColor(.gray).frame(height: 1)
                         }
                     }
                 }
@@ -44,12 +43,6 @@ struct ContentView: View {
         }
         .onAppear {
             feature(.fetch)
-        }
-        .onReceive(feature.publisher) { event in
-            switch event {
-            case let .downloadFailure(error):
-                print(error)
-            }
         }
     }
 }

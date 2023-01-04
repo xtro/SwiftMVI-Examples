@@ -9,4 +9,5 @@ import Foundation
 
 public enum Network {
     static let dataTask: DataTask = .init()
+    static let getAssets: GetAssets = .init()
 }
